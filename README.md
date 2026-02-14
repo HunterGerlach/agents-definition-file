@@ -82,6 +82,64 @@ Then update the path in your project's `AGENTS.md` bootstrap to point to `.agent
 ./scripts/install-skills.sh --copy
 ```
 
+## Staying Up to Date
+
+The playbook evolves as we learn. Copies drift — use one of these strategies to stay current.
+
+### Git submodule (recommended for teams)
+
+Pins a specific commit and makes updates explicit via PR:
+
+```bash
+# Add once
+git submodule add https://github.com/HunterGerlach/agent-playbook.git .agent/playbook
+
+# Bootstrap symlinks from the submodule
+ln -s .agent/playbook/AGENTS.md AGENTS.md
+ln -s AGENTS.md CLAUDE.md
+```
+
+To pull the latest:
+
+```bash
+cd .agent/playbook && git pull origin main && cd -
+git add .agent/playbook
+git commit -m "Update agent-playbook to latest"
+```
+
+Team members get the update automatically on their next `git pull` + `git submodule update --init`.
+
+### Local symlinks (solo / single-machine)
+
+If you cloned agent-playbook alongside your projects, the symlink approach from Quick Start keeps files in sync with no manual steps. Good for solo work; doesn't travel with the repo.
+
+### Periodic copy-refresh
+
+If you prefer vendored copies (e.g., air-gapped environments), create a script or CI job to refresh:
+
+```bash
+# .agent/update-playbook.sh
+#!/usr/bin/env bash
+set -euo pipefail
+PLAYBOOK="${1:?Usage: update-playbook.sh /path/to/agent-playbook}"
+cp "$PLAYBOOK/AGENTS.md" "$(git rev-parse --show-toplevel)/AGENTS.md"
+cp "$PLAYBOOK/AGENT_INSTRUCTIONS.md" .agent/
+cp -r "$PLAYBOOK/modules" .agent/
+cp -r "$PLAYBOOK/scripts" .agent/
+cp -r "$PLAYBOOK/skills"  .agent/
+echo "Playbook updated from $PLAYBOOK at $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+```
+
+Run it periodically or add a CI reminder to check for upstream changes.
+
+### Which strategy to use?
+
+| Situation | Strategy |
+|---|---|
+| Team repo, want controlled updates | **Git submodule** |
+| Solo dev, playbook cloned locally | **Local symlinks** |
+| Air-gapped / vendored / no submodules | **Periodic copy-refresh** |
+
 ## How It Works
 
 - **AGENTS.md** is a slim bootstrap stub. Tools that scan for `AGENTS.md` get the critical minimum: prime protocol, non-interactive safety, session completion, and a pointer to the full instructions.
