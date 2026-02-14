@@ -3,6 +3,7 @@ name: root-cause-analysis
 description: Perform root cause analysis using the "5 Whys" technique (from the Open Practice Library) when a bug, failure, or anti-pattern is encountered.
 version: 1.0.0
 tier: 0
+license: MIT
 ---
 
 # Root Cause Analysis

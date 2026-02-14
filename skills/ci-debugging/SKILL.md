@@ -3,6 +3,7 @@ name: ci-debugging
 description: Systematically debug CI/CD pipeline failures by analyzing logs, configuration, and environment differences.
 version: 1.0.0
 tier: 0
+license: MIT
 ---
 
 # CI Debugging

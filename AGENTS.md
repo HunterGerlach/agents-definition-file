@@ -9,29 +9,14 @@ This file provides the minimum critical guidance for any agent. Read the full in
 
 On every session start, after compaction, or after context clear:
 
-1. Run the repo's prime command: `bd prime` / `gt prime` / `make agent-prime`
+1. Run the repo's prime command: `bd prime` / `gt prime` / `make agent-prime` / `./scripts/agent-prime.sh`
 2. If no prime command exists, read `AGENT_INSTRUCTIONS.md` (or `.agent/AGENT_INSTRUCTIONS.md`) and identify test/lint/build commands before editing code.
 3. Re-prime after any compaction or context reset.
 
-## Non-Interactive Safety
+## Critical Safety Rails
 
-- Never open editors or pagers (`$EDITOR`, `less`, `more`, `vi`, `nano`).
-- Use non-interactive flags: `cp -f`, `mv -f`, `rm -rf`, `apt-get -y`.
-- Use batch mode for remote operations: `ssh -o BatchMode=yes`, `scp -o BatchMode=yes`.
-- Assume shell aliases may add `-i` (interactive). Always use explicit flags.
-- Use `gh` CLI for GitHub operations — never browser or playwright tools.
-- If a command might prompt for input, find the non-interactive alternative or skip it and explain why.
-
-## Session Completion
-
-Before ending any session:
-
-1. File follow-ups — create issues/beads for remaining work.
-2. Run quality gates — test, lint, build (if code changed). All must pass.
-3. Commit all changes with meaningful messages.
-4. Push if you have write access. If not, commit locally and produce a patch/diff with apply instructions.
-5. Verify clean state — `git status` shows no uncommitted work.
-6. Summarize — what was done, what remains, where to pick up next.
+- **Non-interactive only.** Never open editors/pagers. Use non-interactive flags (`-f`, `-y`, `BatchMode=yes`). Use `gh` CLI for GitHub — never browser tools. Full list in AGENT_INSTRUCTIONS.md.
+- **Clean up every session.** Run quality gates, commit all changes, push if possible, verify `git status` is clean, summarize what was done and what remains. Full checklist in AGENT_INSTRUCTIONS.md.
 
 ## Ask Before Proceeding
 

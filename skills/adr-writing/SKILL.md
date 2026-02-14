@@ -3,6 +3,7 @@ name: adr-writing
 description: Write an Architecture Decision Record (ADR) when a significant architectural choice is made or changed.
 version: 1.0.0
 tier: 0
+license: MIT
 ---
 
 # ADR Writing

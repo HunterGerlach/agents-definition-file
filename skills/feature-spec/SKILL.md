@@ -3,6 +3,7 @@ name: feature-spec
 description: Create or update a feature spec as the canonical source of acceptance criteria, constraints, and test plan for a non-trivial change.
 version: 1.0.0
 tier: 0
+license: MIT
 ---
 
 # Feature Spec

@@ -3,6 +3,7 @@ name: dependency-adding
 description: Evaluate and add a new production dependency, ensuring supply-chain security, license compliance, and minimal footprint.
 version: 1.0.0
 tier: 0
+license: MIT
 ---
 
 # Dependency Adding

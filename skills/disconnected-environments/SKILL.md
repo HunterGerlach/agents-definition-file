@@ -3,6 +3,7 @@ name: disconnected-environments
 description: Verify that a solution works in air-gapped or disconnected environments with no external network access.
 version: 1.0.0
 tier: 0
+license: MIT
 ---
 
 # Disconnected Environments

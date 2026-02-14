@@ -7,22 +7,30 @@
 # Options:
 #   --copy       Copy files instead of symlinking (default: symlink)
 #   --target     Install for a specific tool only: claude, codex, copilot (default: all)
+#   --project    Project root to install into (default: git repo root of CWD)
 
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
-SKILLS_SRC="$REPO_ROOT/skills"
+PLAYBOOK_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+SKILLS_SRC="$PLAYBOOK_ROOT/skills"
 MODE="symlink"
 TARGET="all"
+PROJECT_ROOT=""
 
 while [[ $# -gt 0 ]]; do
   case $1 in
     --copy) MODE="copy"; shift ;;
     --target) TARGET="$2"; shift 2 ;;
+    --project) PROJECT_ROOT="$2"; shift 2 ;;
     *) echo "Unknown option: $1"; exit 1 ;;
   esac
 done
+
+# Resolve project root: explicit flag > git root > CWD
+if [[ -z "$PROJECT_ROOT" ]]; then
+  PROJECT_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
+fi
 
 install_skill() {
   local src="$1"
@@ -54,9 +62,9 @@ install_for_tool() {
   local dest_dir
 
   case "$tool" in
-    claude)  dest_dir=".claude/skills" ;;
-    codex)   dest_dir=".agents/skills" ;;
-    copilot) dest_dir=".github/skills" ;;
+    claude)  dest_dir="$PROJECT_ROOT/.claude/skills" ;;
+    codex)   dest_dir="$PROJECT_ROOT/.agents/skills" ;;
+    copilot) dest_dir="$PROJECT_ROOT/.github/skills" ;;
     *) echo "Unknown tool: $tool"; return 1 ;;
   esac
 
@@ -77,4 +85,4 @@ else
   install_for_tool "$TARGET"
 fi
 
-echo "Done. Skills installed from: $SKILLS_SRC"
+echo "Done. Skills installed from: $SKILLS_SRC into: $PROJECT_ROOT"

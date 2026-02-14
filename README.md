@@ -23,6 +23,7 @@ modules/
 scripts/
   agent-prime.sh           # Template prime script (fallback for projects without bd/gt)
   install-skills.sh        # Install skills into tool-specific directories
+  validate-skills.sh       # Validate skill frontmatter and structure
 ```
 
 ## Quick Start
@@ -150,40 +151,13 @@ Run it periodically or add a CI reminder to check for upstream changes.
 
 ## Skills
 
-Skills are on-demand runbooks installed into tool-specific directories. They use progressive disclosure — agents see metadata up front and load full instructions only when relevant.
+Skills are on-demand runbooks with progressive disclosure — agents see metadata up front and load full instructions only when relevant. All skills follow the risk tier model in [`skills/_POLICY.md`](skills/_POLICY.md).
 
-| Skill | Tier | Description |
-|---|---|---|
-| `adr-writing` | 0 | Architecture Decision Records |
-| `security-review` | 0 | Security review checklist |
-| `dependency-adding` | 0 | Dependency evaluation workflow |
-| `ci-debugging` | 0 | CI/CD pipeline debugging |
-| `disconnected-environments` | 0 | Air-gapped / network-restricted validation |
-| `feature-spec` | 0 | Feature spec creation (spec-driven development) |
-| `root-cause-analysis` | 0 | Root cause analysis (iterative "why?" technique) |
+See [`skills/README.md`](skills/README.md) for the full catalog with descriptions.
 
-All skills follow a strict risk tier model defined in [`skills/_POLICY.md`](skills/_POLICY.md). See [`skills/README.md`](skills/README.md) for the full catalog.
+## Further Reading
 
-## Tool Integration
-
-This workflow defaults to **Beads** for task tracking and **Gas Town** for multi-agent coordination:
-
-- If `bd` or `.beads/` is present: use Beads as the task ledger
-- If `gt` or `GT_ROLE` is set: use Gas Town for priming and coordination
-- If neither is available: use `scripts/agent-prime.sh` and GitHub Issues
-
-Projects may opt out by documenting the exception in project-level instructions.
-
-## Project-Specific Overrides
-
-These files are intentionally language- and framework-agnostic. For project-specific details, use:
-
-- The repo's own `AGENTS.md` (overrides this template)
-- `AGENTS.override.md` (where supported by the tool)
-- Nested `AGENTS.md` files in subdirectories
-
-Project-level instructions extend and may override the universal defaults.
-
-## What's Inside
-
-See [`AGENTS.md`](AGENTS.md) for the bootstrap stub and [`AGENT_INSTRUCTIONS.md`](AGENT_INSTRUCTIONS.md) for the full instructions.
+- [`AGENTS.md`](AGENTS.md) — Bootstrap stub (what agents see first)
+- [`AGENT_INSTRUCTIONS.md`](AGENT_INSTRUCTIONS.md) — Complete operational and engineering standards
+- [`modules/`](modules/) — Tool integrations (Beads, Gas Town)
+- [`skills/_POLICY.md`](skills/_POLICY.md) — Skill risk tiers and security rules

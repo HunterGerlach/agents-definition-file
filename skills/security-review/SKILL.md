@@ -3,6 +3,7 @@ name: security-review
 description: Perform a security review checklist when changes touch authentication, authorization, cryptography, secrets, or external interfaces.
 version: 1.0.0
 tier: 0
+license: MIT
 ---
 
 # Security Review
