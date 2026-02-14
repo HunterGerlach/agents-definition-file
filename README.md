@@ -1,4 +1,4 @@
-# agents-definition-file
+# agent-playbook
 
 A universal, portable agent instruction set that codifies operational protocols and durable engineering principles for AI-assisted development. Drop it into any project to give AI agents consistent, high-quality guidance.
 
