@@ -28,7 +28,7 @@ Follow this workflow on every task:
 
 1. **Restate the problem** in 1–3 sentences.
 2. **Write a user story**: "As a [role], I want [capability], so that [benefit]."
-3. **Define acceptance criteria** in Given/When/Then format. Scale scenario count to the code's expected value and longevity.
+3. **Create or update a feature spec** (`specs/<slug>.md`) as the canonical home of acceptance criteria (Given/When/Then), scope, constraints, edge cases, and test plan. For trivial changes, inline acceptance criteria are sufficient — skip the spec file.
 4. **Plan the smallest viable change.** Prefer minimal diffs. No renames, file moves, or architecture rewrites unless requested or clearly necessary. If a change touches many files, explain why.
 5. **Implement** using Red-Green-Refactor.
 6. **Verify**: run fast checks first (unit tests, lint), then broader checks as needed. Fix failures before delivering.
@@ -36,7 +36,7 @@ Follow this workflow on every task:
 
 #### Definition of Done
 
-- [ ] Acceptance criteria written (Given/When/Then)
+- [ ] Spec created or updated (if non-trivial); acceptance criteria written (Given/When/Then)
 - [ ] Tests added or updated
 - [ ] **All** tests pass — not just new tests, but every previously passing test. Do not leave regressions.
 - [ ] Security implications considered
@@ -129,6 +129,7 @@ Before ending any session:
   - **MAJOR** — incompatible API changes.
   - **MINOR** — backwards-compatible new functionality.
   - **PATCH** — backwards-compatible bug fixes.
+- **Commit early and often.** Each commit should be a single, atomic unit of work — one logical change that compiles, passes tests, and could be reverted independently. Do not batch unrelated changes into a single commit. If you find yourself writing "and" in a commit message, it should probably be two commits.
 - Write **git commit messages** in imperative mood (Tim Pope convention):
   - First line completes the sentence: "If applied, this commit will ..."
   - Example: "Add retry logic to HTTP client" — not "Added retry logic."

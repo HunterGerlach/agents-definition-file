@@ -14,6 +14,9 @@ skills/
   security-review/         # Tier 0: Security review checklist
   dependency-adding/       # Tier 0: Dependency evaluation workflow
   ci-debugging/            # Tier 0: CI/CD pipeline debugging
+  disconnected-environments/ # Tier 0: Air-gapped validation
+  feature-spec/            # Tier 0: Spec-driven development
+  root-cause-analysis/     # Tier 0: 5 Whys root cause analysis
 modules/
   beads.md                 # Beads task tracking integration (default-on)
   gastown.md               # Gas Town multi-agent integration (default-on)
@@ -28,12 +31,12 @@ scripts/
 
 ```bash
 # Option A: symlink (stays in sync with this repo)
-ln -s /path/to/agents-definition-file/AGENTS.md ~/your-project/AGENTS.md
-ln -s /path/to/agents-definition-file/AGENT_INSTRUCTIONS.md ~/your-project/AGENT_INSTRUCTIONS.md
+ln -s /path/to/agent-playbook/AGENTS.md ~/your-project/AGENTS.md
+ln -s /path/to/agent-playbook/AGENT_INSTRUCTIONS.md ~/your-project/AGENT_INSTRUCTIONS.md
 
 # Option B: copy (independent snapshot)
-cp /path/to/agents-definition-file/AGENTS.md ~/your-project/
-cp /path/to/agents-definition-file/AGENT_INSTRUCTIONS.md ~/your-project/
+cp /path/to/agent-playbook/AGENTS.md ~/your-project/
+cp /path/to/agent-playbook/AGENT_INSTRUCTIONS.md ~/your-project/
 ```
 
 **For Claude Code compatibility:**
@@ -45,8 +48,8 @@ ln -s AGENTS.md CLAUDE.md
 **Optional — copy modules and prime script as needed:**
 
 ```bash
-cp -r /path/to/agents-definition-file/modules ~/your-project/
-mkdir -p ~/your-project/scripts && cp /path/to/agents-definition-file/scripts/agent-prime.sh ~/your-project/scripts/
+cp -r /path/to/agent-playbook/modules ~/your-project/
+mkdir -p ~/your-project/scripts && cp /path/to/agent-playbook/scripts/agent-prime.sh ~/your-project/scripts/
 ```
 
 **Install skills into tool-specific directories:**
@@ -81,6 +84,7 @@ Skills are on-demand runbooks installed into tool-specific directories. They use
 | `dependency-adding` | 0 | Dependency evaluation workflow |
 | `ci-debugging` | 0 | CI/CD pipeline debugging |
 | `disconnected-environments` | 0 | Air-gapped / network-restricted validation |
+| `feature-spec` | 0 | Feature spec creation (spec-driven development) |
 | `root-cause-analysis` | 0 | 5 Whys root cause analysis |
 
 All skills follow a strict risk tier model defined in [`skills/_POLICY.md`](skills/_POLICY.md). See [`skills/README.md`](skills/README.md) for the full catalog.
