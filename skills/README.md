@@ -12,6 +12,7 @@ Canonical skill definitions for AI-assisted development workflows. These skills 
 | `ci-debugging` | 0 | Systematically debug CI/CD pipeline failures |
 | `disconnected-environments` | 0 | Verify solutions work in air-gapped or network-restricted environments |
 | `feature-spec` | 0 | Create or update a feature spec as the canonical source of acceptance criteria and test plan |
+| `mcp-integration` | 0 | Plan MCP server integration when tool/data access needs exceed local CLIs |
 | `root-cause-analysis` | 0 | Perform root cause analysis using the iterative "why?" technique |
 
 ## Installation

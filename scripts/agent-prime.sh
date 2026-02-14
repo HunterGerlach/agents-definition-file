@@ -31,6 +31,12 @@ else
 fi
 echo ""
 
+# -- MCP availability --
+if [[ -f ".agent/capabilities.yml" ]] && grep -q "mcp" ".agent/capabilities.yml" 2>/dev/null; then
+  echo "MCP: configured (see .agent/capabilities.yml)"
+  echo ""
+fi
+
 # -- Constraints --
 echo "Constraints:"
 echo "  - FIPS-enabled target environment"

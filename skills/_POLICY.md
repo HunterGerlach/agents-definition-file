@@ -20,6 +20,7 @@ All skills in this catalog are assigned a risk tier. The tier determines what a 
 ### Tier 2 — High side-effects
 
 - Anything that pushes, deploys, deletes, or modifies external systems.
+- Remote MCP server usage (data crosses a network boundary).
 - Must be user-invoked only (never model-invocable).
 - Require explicit rollback plan documented in the skill.
 - Tool restrictions mandatory where supported.

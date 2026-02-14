@@ -179,6 +179,12 @@ This workflow defaults to **Beads** for task tracking and **Gas Town** for multi
 
 Projects may opt out of either tool by documenting the exception in their project-level instructions.
 
+#### Tooling & Interop Ladder
+
+1. **CLI-first (default)** — Use existing repo CLIs directly. Lowest surface area, easiest to audit.
+2. **MCP wrapper (when needed)** — Use MCP when you need cross-client tool integration, typed tool access, or finer-grained permission boundaries. Treat remote MCP as Tier 2 risk; require explicit user intent. See `modules/mcp.md`.
+3. **Agent interop protocols (rare)** — A2A, ACP, and similar protocols are opt-in for multi-agent coordination across systems or vendors. See `modules/agent-interop.md`.
+
 ### 10. Skills
 
 Skills are on-demand runbooks for specialized workflows. They use progressive disclosure: agents see metadata up front and load full instructions only when the skill is relevant.
