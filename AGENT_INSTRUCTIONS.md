@@ -68,6 +68,8 @@ Before ending any session:
 6. **Verify** clean state: `git status` shows no uncommitted changes, no unpushed commits (if push was possible).
 7. **Summarize**: what was done, what remains, where the next session should pick up.
 
+**Prefer existing capabilities.** Before reaching for an external tool or service, exhaust built-in capabilities and existing skills. Every external call is latency, risk, and a potential point of failure. Only reach outward when no internal option covers the need.
+
 **Ask before proceeding** when:
 - Requirements are ambiguous.
 - The change affects public APIs or security posture.

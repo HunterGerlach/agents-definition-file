@@ -39,3 +39,4 @@ All skills in this catalog are assigned a risk tier. The tier determines what a 
 - Write descriptions like a router: specific enough to trigger correctly, narrow enough to avoid false activation.
 - Version skills via `metadata.version` in frontmatter.
 - Skills do not replace always-on instructions in AGENTS.md or AGENT_INSTRUCTIONS.md.
+- **Prefer internal over external.** Skills should leverage existing skills and built-in capabilities rather than recommending external tools or services. Do not introduce an external dependency when an existing skill or native capability covers the need.
