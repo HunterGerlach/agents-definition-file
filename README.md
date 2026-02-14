@@ -8,11 +8,18 @@ A universal, portable agent instruction set that codifies operational protocols 
 AGENTS.md                  # Bootstrap stub (tool compatibility + critical ops)
 CLAUDE.md -> AGENTS.md     # Claude Code compatibility symlink
 AGENT_INSTRUCTIONS.md      # Full instructions (operations + standards)
+skills/
+  _POLICY.md               # Risk tier model and security rules for skills
+  adr-writing/             # Tier 0: Architecture Decision Records
+  security-review/         # Tier 0: Security review checklist
+  dependency-adding/       # Tier 0: Dependency evaluation workflow
+  ci-debugging/            # Tier 0: CI/CD pipeline debugging
 modules/
   beads.md                 # Beads task tracking integration (default-on)
   gastown.md               # Gas Town multi-agent integration (default-on)
 scripts/
   agent-prime.sh           # Template prime script (fallback for projects without bd/gt)
+  install-skills.sh        # Install skills into tool-specific directories
 ```
 
 ## Quick Start
@@ -42,13 +49,39 @@ cp -r /path/to/agents-definition-file/modules ~/your-project/
 mkdir -p ~/your-project/scripts && cp /path/to/agents-definition-file/scripts/agent-prime.sh ~/your-project/scripts/
 ```
 
+**Install skills into tool-specific directories:**
+
+```bash
+# Install for all supported tools (symlinks by default)
+./scripts/install-skills.sh
+
+# Install for a specific tool
+./scripts/install-skills.sh --target claude
+
+# Use copies instead of symlinks
+./scripts/install-skills.sh --copy
+```
+
 ## How It Works
 
 - **AGENTS.md** is a slim bootstrap stub. Tools that scan for `AGENTS.md` get the critical minimum: prime protocol, non-interactive safety, session completion, and a pointer to the full instructions.
 - **AGENT_INSTRUCTIONS.md** contains the complete operational and engineering standards, organized in three parts:
   1. **Agent Operations** — prime protocol, task workflow, non-interactive safety, session completion
   2. **Engineering Standards** — architecture, testing, delivery, security, versioning
-  3. **Context & Integration** — thinking tools, AI norms, Beads/Gas Town, project customization
+  3. **Context & Integration** — thinking tools, AI norms, skills, Beads/Gas Town, project customization
+
+## Skills
+
+Skills are on-demand runbooks installed into tool-specific directories. They use progressive disclosure — agents see metadata up front and load full instructions only when relevant.
+
+| Skill | Tier | Description |
+|---|---|---|
+| `adr-writing` | 0 | Architecture Decision Records |
+| `security-review` | 0 | Security review checklist |
+| `dependency-adding` | 0 | Dependency evaluation workflow |
+| `ci-debugging` | 0 | CI/CD pipeline debugging |
+
+All skills follow a strict risk tier model defined in [`skills/_POLICY.md`](skills/_POLICY.md). See [`skills/README.md`](skills/README.md) for the full catalog.
 
 ## Tool Integration
 

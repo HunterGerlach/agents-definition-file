@@ -48,7 +48,7 @@ Follow this workflow on every task:
 Agents must never hang waiting for interactive input:
 
 - Never open editors or pagers (`$EDITOR`, `less`, `more`, `vi`, `nano`).
-- Use non-interactive flags: `cp -f`, `mv -f`, `rm -rf`, `apt-get -y`, `pip install -y`.
+- Use non-interactive flags: `cp -f`, `mv -f`, `rm -rf`, `apt-get -y`.
 - Use batch mode for remote operations: `ssh -o BatchMode=yes`, `scp -o BatchMode=yes`.
 - Suppress auto-update prompts: `HOMEBREW_NO_AUTO_UPDATE=1`.
 - Assume shell aliases may add `-i` (interactive). Always use explicit flags.
@@ -173,14 +173,31 @@ This workflow defaults to **Beads** for task tracking and **Gas Town** for multi
 
 Projects may opt out of either tool by documenting the exception in their project-level instructions.
 
-### 10. Project-Level Customization
+### 10. Skills
+
+Skills are on-demand runbooks for specialized workflows. They use progressive disclosure: agents see metadata up front and load full instructions only when the skill is relevant.
+
+- Skills live in `skills/` as tool-agnostic source files. Use `scripts/install-skills.sh` to install into tool-specific directories (`.claude/skills/`, `.agents/skills/`, `.github/skills/`).
+- See `skills/_POLICY.md` for the risk tier model and security rules.
+- Skills do not replace always-on instructions in this file or `AGENTS.md`.
+
+#### Skill Security Model
+
+- Treat every skill bundle like a dependency: review, pin, and audit.
+- Default skills to instruction-only (Tier 0); scripts require explicit justification.
+- No downloading or executing remote code from within skills.
+- No `curl | bash` patterns or equivalent.
+- Never run Tier 2 skills (external side-effects) without explicit user intent.
+- Use `allowed-tools` restrictions where supported to limit skill capabilities.
+
+### 11. Project-Level Customization
 
 - This file captures **universal, portable** engineering principles.
 - For project-specific instructions, use the repo's own `AGENTS.md`, `AGENTS.override.md` (where supported), or nested `AGENTS.md` files in subdirectories.
 - Project-level instructions **extend and may override** the universal defaults. Conflicts resolve in favor of the project-level file.
 - Keep this file language- and framework-agnostic so it remains portable.
 
-### 11. Documentation Artifacts
+### 12. Documentation Artifacts
 
 - When making architectural decisions, produce or update an **ADR**.
 - When defining work, produce a **user story** with acceptance criteria.

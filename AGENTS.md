@@ -15,7 +15,7 @@ On every session start, after compaction, or after context clear:
 ## Non-Interactive Safety
 
 - Never open editors or pagers (`$EDITOR`, `less`, `more`, `vi`, `nano`).
-- Use non-interactive flags: `cp -f`, `mv -f`, `rm -rf`, `apt-get -y`, `pip install -y`.
+- Use non-interactive flags: `cp -f`, `mv -f`, `rm -rf`, `apt-get -y`.
 - Use batch mode for remote operations: `ssh -o BatchMode=yes`, `scp -o BatchMode=yes`.
 - Assume shell aliases may add `-i` (interactive). Always use explicit flags.
 - Use `gh` CLI for GitHub operations — never browser or playwright tools.
