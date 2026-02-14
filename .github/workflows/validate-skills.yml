@@ -5,6 +5,7 @@ on:
     paths:
       - 'skills/**'
       - 'scripts/validate-skills.sh'
+  workflow_dispatch:
 
 jobs:
   validate:
