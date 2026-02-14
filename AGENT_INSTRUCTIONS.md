@@ -154,6 +154,7 @@ Before ending any session:
 - **Gall's Law** — Complex systems that work evolved from simple systems that worked. Start simple.
 - **Hyrum's Law** — All observable behaviors of an API will be depended upon. Be deliberate about interfaces.
 - **Goodhart's Law** — When a measure becomes a target, it ceases to be a good measure.
+- **Anti-patterns compound.** An anti-pattern left in place attracts more anti-patterns — workarounds breed workarounds. When you encounter one, trace it to the root cause (use the 5 Whys). Fix the cause, not the symptom. A quick patch over a structural problem guarantees a harder fix later.
 - Keep as constant companions: **KISS**, **YAGNI**, **DRY**, and the **Pareto Principle**.
 
 ### 8. AI-Assisted Development

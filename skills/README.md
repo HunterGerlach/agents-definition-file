@@ -10,6 +10,8 @@ Canonical skill definitions for AI-assisted development workflows. These skills 
 | `security-review` | 0 | Security review checklist for changes touching auth, crypto, or external interfaces |
 | `dependency-adding` | 0 | Evaluate and add dependencies with supply-chain security and compliance checks |
 | `ci-debugging` | 0 | Systematically debug CI/CD pipeline failures |
+| `disconnected-environments` | 0 | Verify solutions work in air-gapped or network-restricted environments |
+| `root-cause-analysis` | 0 | Perform root cause analysis using the 5 Whys technique |
 
 ## Installation
 

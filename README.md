@@ -80,6 +80,8 @@ Skills are on-demand runbooks installed into tool-specific directories. They use
 | `security-review` | 0 | Security review checklist |
 | `dependency-adding` | 0 | Dependency evaluation workflow |
 | `ci-debugging` | 0 | CI/CD pipeline debugging |
+| `disconnected-environments` | 0 | Air-gapped / network-restricted validation |
+| `root-cause-analysis` | 0 | 5 Whys root cause analysis |
 
 All skills follow a strict risk tier model defined in [`skills/_POLICY.md`](skills/_POLICY.md). See [`skills/README.md`](skills/README.md) for the full catalog.
 
