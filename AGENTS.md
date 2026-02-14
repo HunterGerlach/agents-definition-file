@@ -1,6 +1,7 @@
 # AGENTS.md — Bootstrap
 
 See **[AGENT_INSTRUCTIONS.md](AGENT_INSTRUCTIONS.md)** for complete instructions.
+<!-- If you moved support files into .agent/, change the path above to .agent/AGENT_INSTRUCTIONS.md -->
 
 This file provides the minimum critical guidance for any agent. Read the full instructions when possible.
 
@@ -9,7 +10,7 @@ This file provides the minimum critical guidance for any agent. Read the full in
 On every session start, after compaction, or after context clear:
 
 1. Run the repo's prime command: `bd prime` / `gt prime` / `make agent-prime`
-2. If no prime command exists, read `AGENT_INSTRUCTIONS.md` and identify test/lint/build commands before editing code.
+2. If no prime command exists, read `AGENT_INSTRUCTIONS.md` (or `.agent/AGENT_INSTRUCTIONS.md`) and identify test/lint/build commands before editing code.
 3. Re-prime after any compaction or context reset.
 
 ## Non-Interactive Safety

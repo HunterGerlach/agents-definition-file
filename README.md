@@ -16,7 +16,7 @@ skills/
   ci-debugging/            # Tier 0: CI/CD pipeline debugging
   disconnected-environments/ # Tier 0: Air-gapped validation
   feature-spec/            # Tier 0: Spec-driven development
-  root-cause-analysis/     # Tier 0: 5 Whys root cause analysis
+  root-cause-analysis/     # Tier 0: Root cause analysis (iterative "why?" technique)
 modules/
   beads.md                 # Beads task tracking integration (default-on)
   gastown.md               # Gas Town multi-agent integration (default-on)
@@ -27,32 +27,49 @@ scripts/
 
 ## Quick Start
 
-**Copy or symlink into your project root:**
+### Recommended layout
 
-```bash
-# Option A: symlink (stays in sync with this repo)
-ln -s /path/to/agent-playbook/AGENTS.md ~/your-project/AGENTS.md
-ln -s /path/to/agent-playbook/AGENT_INSTRUCTIONS.md ~/your-project/AGENT_INSTRUCTIONS.md
+Keep only the bootstrap file at your project root. Everything else goes in a subdirectory (`.agent/` by convention) to avoid cluttering the repo:
 
-# Option B: copy (independent snapshot)
-cp /path/to/agent-playbook/AGENTS.md ~/your-project/
-cp /path/to/agent-playbook/AGENT_INSTRUCTIONS.md ~/your-project/
+```
+your-project/
+  AGENTS.md              # Bootstrap stub (required at root — tools scan for it)
+  CLAUDE.md -> AGENTS.md # Claude Code compatibility symlink
+  .agent/                # All playbook support files live here
+    AGENT_INSTRUCTIONS.md
+    modules/
+    scripts/
+    skills/
+  src/                   # ← your code, undisturbed
+  ...
 ```
 
-**For Claude Code compatibility:**
+### Setup
 
 ```bash
-ln -s AGENTS.md CLAUDE.md
+PLAYBOOK=/path/to/agent-playbook
+PROJECT=~/your-project
+
+# 1. Bootstrap file — must be at project root (tools scan for it)
+#    Option A: symlink (stays in sync)
+ln -s "$PLAYBOOK/AGENTS.md" "$PROJECT/AGENTS.md"
+#    Option B: copy (independent snapshot)
+cp "$PLAYBOOK/AGENTS.md" "$PROJECT/AGENTS.md"
+
+# 2. Claude Code compatibility
+ln -s AGENTS.md "$PROJECT/CLAUDE.md"
+
+# 3. Support files — keep in .agent/ subdirectory
+mkdir -p "$PROJECT/.agent"
+cp "$PLAYBOOK/AGENT_INSTRUCTIONS.md" "$PROJECT/.agent/"
+cp -r "$PLAYBOOK/modules" "$PROJECT/.agent/"
+cp -r "$PLAYBOOK/scripts" "$PROJECT/.agent/"
+cp -r "$PLAYBOOK/skills"  "$PROJECT/.agent/"
 ```
 
-**Optional — copy modules and prime script as needed:**
+Then update the path in your project's `AGENTS.md` bootstrap to point to `.agent/AGENT_INSTRUCTIONS.md` instead of `AGENT_INSTRUCTIONS.md`.
 
-```bash
-cp -r /path/to/agent-playbook/modules ~/your-project/
-mkdir -p ~/your-project/scripts && cp /path/to/agent-playbook/scripts/agent-prime.sh ~/your-project/scripts/
-```
-
-**Install skills into tool-specific directories:**
+### Install skills into tool-specific directories
 
 ```bash
 # Install for all supported tools (symlinks by default)
@@ -85,7 +102,7 @@ Skills are on-demand runbooks installed into tool-specific directories. They use
 | `ci-debugging` | 0 | CI/CD pipeline debugging |
 | `disconnected-environments` | 0 | Air-gapped / network-restricted validation |
 | `feature-spec` | 0 | Feature spec creation (spec-driven development) |
-| `root-cause-analysis` | 0 | 5 Whys root cause analysis |
+| `root-cause-analysis` | 0 | Root cause analysis (iterative "why?" technique) |
 
 All skills follow a strict risk tier model defined in [`skills/_POLICY.md`](skills/_POLICY.md). See [`skills/README.md`](skills/README.md) for the full catalog.
 
