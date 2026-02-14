@@ -1,18 +1,45 @@
 # AGENTS.md — Universal Agent Instructions
 
+This file contains portable engineering defaults.
+Project-specific rules live in the repo's own `AGENTS.md`, `AGENTS.override.md`, or nested `AGENTS.md` per subdirectory.
+If a project rule conflicts with this file, **project rules win**.
+
+## Operating Protocol
+
+Follow this workflow on every task:
+
+1. **Restate the problem** in 1–3 sentences.
+2. **Write a user story**: "As a [role], I want [capability], so that [benefit]."
+3. **Define acceptance criteria** in Given/When/Then format. Scale scenario count to the code's expected value and longevity.
+4. **Plan the smallest viable change.** Prefer minimal diffs. No renames, file moves, or architecture rewrites unless requested or clearly necessary. If a change touches many files, explain why.
+5. **Implement** using Red-Green-Refactor.
+6. **Verify**: run fast checks first (unit tests, lint), then broader checks as needed. Fix failures before delivering.
+7. **Deliver**: summarize what changed, why, and how it was validated. Note follow-ups explicitly.
+
+**Ask before proceeding** when:
+- Requirements are ambiguous.
+- The change affects public APIs or security posture.
+- A new production dependency is needed.
+- The change requires broad refactors or file moves.
+
+### Definition of Done
+
+- [ ] Acceptance criteria written (Given/When/Then)
+- [ ] Tests added or updated
+- [ ] **All** tests pass — not just new tests, but every previously passing test. Do not leave regressions.
+- [ ] Security implications considered
+- [ ] ADR added if architecture changed
+- [ ] Docs updated if behavior changed
+
 ## 1. Problem Understanding & Prioritization
 
 - Before writing code, articulate the problem you are solving.
-- Frame work as a user story: "As a [role], I want [capability], so that [benefit]."
-- Write acceptance criteria in **Given/When/Then** format:
-  - **Given** [precondition], **When** [action], **Then** [expected outcome].
-  - Scale the number of scenarios proportionally to the expected value and longevity of the code.
-- Definition of Done reflects the same proportionality — throwaway scripts need less rigor than core domain logic.
 - Prioritize by **Cost of Delay**: sequence work by the economic cost of *not* delivering it. Urgency and value outrank effort.
+- Definition of Done is proportional — throwaway scripts need less rigor than core domain logic.
 
 ## 2. Architecture & Design
 
-- Default to **hexagonal / ports-and-adapters** architecture: domain logic at the center, adapters at the edges. This keeps future change cheap.
+- Default to **hexagonal / ports-and-adapters** architecture: domain logic at the center, adapters at the edges. This keeps future change cheap. Simpler structures are acceptable for trivial or short-lived code, but the burden of proof is on simplifying, not on structuring.
 - Apply **SOLID** principles:
   - **S**ingle Responsibility — one reason to change per module.
   - **O**pen/Closed — extend behavior without modifying existing code.
@@ -33,7 +60,7 @@
   3. **Refactor** — Clean up while keeping tests green.
 - Do not skip steps. Do not write implementation before tests.
 - **Test Pyramid**: heavy base of unit tests, moderate integration tests, thin layer of end-to-end tests. Favor low-cost, high-value, non-fragile tests.
-- **Full test coverage** is the default expectation. Untested code is the exception that requires justification (e.g., trivial getters, framework boilerplate).
+- **Full test coverage** is the default expectation. Untested code is the exception that requires justification (e.g., trivial getters, framework boilerplate, legacy code not under active change).
 
 ## 4. Application Design & Delivery
 
@@ -45,6 +72,8 @@
   - Disposability — fast startup, graceful shutdown.
   - Dev/prod parity.
   - Logs as event streams.
+- Build for **full observability** from the start: structured logging, metrics, distributed tracing. Instrument at service boundaries and key decision points. If something breaks in production, you should be able to answer "what happened and why" from telemetry alone.
+- Consider **resource usage** explicitly: CPU, memory, storage, network, and cloud spend. Right-size allocations, set limits/requests, and avoid unbounded growth patterns (e.g., uncontrolled caching, memory leaks, fan-out without backpressure).
 - Distinguish the **inner loop** from the **outer loop**:
   - **Inner loop** (developer laptop): fast edit-build-test cycles, local linting, unit tests, hot reload. Optimize for speed and tight feedback.
   - **Outer loop** (CI/CD pipeline): full integration tests, security scans, compliance checks, artifact promotion, deployment. Optimize for correctness and auditability.
@@ -67,22 +96,19 @@
 
 - Adopt a **security-first mindset** — security and compliance are not afterthoughts; they are built in from the start.
 - Assume a **FIPS-enabled** target environment. Use only FIPS-validated cryptographic modules and algorithms (e.g., AES, SHA-256/384/512, TLS 1.2+). Avoid non-compliant primitives (e.g., MD5, RC4, non-FIPS RNGs).
+- Apply **zero-trust** principles: never assume trust based on network location. Authenticate and authorize every request, validate all inputs, and assume any component can be compromised.
 - Apply **least privilege** everywhere: IAM roles, service accounts, file permissions, network policies.
 - Treat secrets as first-class concerns — never hardcode credentials, tokens, or keys. Use secret managers or environment injection.
+- **Minimize dependencies.** Every dependency is attack surface, maintenance burden, and supply-chain risk. Prefer the standard library. When a third-party dependency is necessary, pin versions, verify checksums, and audit transitives.
 - Include **dependency scanning** and **SBOM generation** in the outer loop. Know what you ship.
 - Default to **encrypted at rest and in transit**. If a component does not support encryption, document the exception and the compensating control.
-- Apply **zero-trust** principles: never assume trust based on network location. Authenticate and authorize every request, validate all inputs, and assume any component can be compromised.
-- **Minimize dependencies.** Every dependency is attack surface, maintenance burden, and supply-chain risk. Prefer the standard library. When a third-party dependency is necessary, pin versions, verify checksums, and audit transitives.
 - Write code that is **auditable**: clear logging of security-relevant events, traceable decisions, no silent failures on auth/authz paths.
 
-## 7. Thinking Tools & Mental Models
+## 7. Thinking Tools
 
-- Draw on **Hacker Laws** (dwmkerr/hacker-laws) as a thinking toolkit:
-  - **Gall's Law** — Complex systems that work evolved from simple systems that worked. Start simple.
-  - **Conway's Law** — System design mirrors org structure. Be intentional about boundaries.
-  - **Hyrum's Law** — All observable behaviors of an API will be depended upon. Be deliberate about interfaces.
-  - **Kernighan's Law** — Debugging is twice as hard as writing code. Write code at half your cleverness capacity.
-  - **Goodhart's Law** — When a measure becomes a target, it ceases to be a good measure.
+- **Gall's Law** — Complex systems that work evolved from simple systems that worked. Start simple.
+- **Hyrum's Law** — All observable behaviors of an API will be depended upon. Be deliberate about interfaces.
+- **Goodhart's Law** — When a measure becomes a target, it ceases to be a good measure.
 - Keep as constant companions: **KISS**, **YAGNI**, **DRY**, and the **Pareto Principle**.
 
 ## 8. AI-Assisted Development
@@ -94,9 +120,9 @@
 
 ## 9. Project-Level Customization
 
-- This file captures **universal, portable** engineering principles. It is designed to be copied or symlinked into any project.
-- For project-specific instructions (language, framework, repo conventions, team norms), create a separate file (e.g., `AGENTS-PROJECT.md` or a tool-specific file like `CLAUDE.md`) in the project root.
-- When both files exist, project-level instructions **extend and may override** the universal defaults in this file. Conflicts should be resolved in favor of the project-level file.
+- This file captures **universal, portable** engineering principles.
+- For project-specific instructions, use the repo's own `AGENTS.md`, `AGENTS.override.md` (where supported), or nested `AGENTS.md` files in subdirectories.
+- Project-level instructions **extend and may override** the universal defaults. Conflicts resolve in favor of the project-level file.
 - Keep this file language- and framework-agnostic so it remains portable.
 
 ## 10. Documentation Artifacts

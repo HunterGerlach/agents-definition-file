@@ -22,12 +22,16 @@ ln -s AGENTS.md CLAUDE.md
 
 ## Project-Specific Overrides
 
-`AGENTS.md` is intentionally language- and framework-agnostic. For project-specific details (tech stack, repo conventions, team norms), create a companion file in your project root — e.g., `AGENTS-PROJECT.md` or a tool-specific file like `CLAUDE.md`.
+`AGENTS.md` is intentionally language- and framework-agnostic. For project-specific details (tech stack, repo conventions, team norms), use one of:
 
-Project-level files extend and may override the universal defaults.
+- The repo's own `AGENTS.md` (overrides this template)
+- `AGENTS.override.md` (where supported by the tool)
+- Nested `AGENTS.md` files in subdirectories
+
+Project-level instructions extend and may override the universal defaults.
 
 ## What's Inside
 
-`AGENTS.md` covers: problem understanding, architecture & design, TDD & testing, application delivery (inner/outer loop), versioning & git discipline, security & compliance (FIPS, zero-trust), thinking tools & mental models, AI-assisted development norms, and documentation artifacts.
+`AGENTS.md` includes an **Operating Protocol** (repeatable task workflow with Definition of Done), then covers: problem understanding, architecture & design, TDD & testing, application delivery (inner/outer loop), versioning & git discipline, security & compliance (FIPS, zero-trust), thinking tools, AI-assisted development norms, and documentation artifacts.
 
 See [`AGENTS.md`](AGENTS.md) for the full file.
